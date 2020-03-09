@@ -94,15 +94,18 @@ def roll_stats(attributes):
 def pick_n_choose():
     player_choice = input("Would you like to \"build\" your character, or leave it to the \"fates\"?\nFeel free to make an \"except\"ion for \"race\", \"class\", or \"stats\".\nYour choice: ")
     parsed_choice = player_choice.split()
-    choice_dict = {"race":["choose_race","roll_race"],"class":["choose_class","roll_class"],"stats":["choose_stats","roll_stats"]}
+    choice_list = [["choose_race","roll_race"],["choose_class","roll_class"],["choose_stats","roll_stats"]]
+    function_dict = {"choose_race":choose_race,"choose_class":choose_class,"choose_stats":choose_stats,"roll_race":roll_race,"roll_class":roll_class,"roll_stats":roll_stats}
     error_list = ["A Barbarian crushed your input. Try again.", "A Bard distracted your computer. Try again.", "This Cleric can't heal your input. Try again.", "A Druid polymorphed your input into a sheep. Try again.","A Fighter beat your choice in a duel. Try again.","Your choice has decided to leave and become a Monk. Try again.","A Paladin smited (smote?) your input. Try again.","A Ranger fed your input to her pet. Try again.","A Rogue assassinated your choice of words. Try again.","A Sorcerer incinerated your input. Try again.","A Warlock summoned and made a pact with a greater daemon just to turn your input to gibberish. Try again.","A Wizard turned the internals of the computer to jelly by mistake. Try again.","An Artificer didn't code this properly so it didn't work. Try again."]
     if "except" in parsed_choice:
         exception = parsed_choice[parsed_choice.index("except") + 1]
         except_choice = parsed_choice[parsed_choice.index("except") - 1]
-        
+        print(exception + " " + except_choice)
     else:
         if "build" in parsed_choice:
-            print("build")
+            for item in choice_list:
+                if item[0] in function_dict:
+                    function_dict[item[0]]()
         else:
             if "fates" in parsed_choice:
                 print("fates")
