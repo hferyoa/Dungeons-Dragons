@@ -2,7 +2,7 @@ import random
 import os
 
 SEED = input("Please enter your character name: ")
-attributes = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
+ATTRIBUTES = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
 CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Zerkah","zerkah"],
     "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
     "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
@@ -34,10 +34,11 @@ random.seed(SEED)
 
 def choose_class():
     char_class = input("Please enter your class: ")
+    class_list = CLASS_DICT.keys()
     for profession in CLASS_DICT:
         if char_class in CLASS_DICT[profession]:
             return(profession)
-
+    
 def roll_class():
     profession_seed = random.randint(0,12)
     profession = list(CLASS_DICT.keys())[profession_seed]
@@ -45,6 +46,7 @@ def roll_class():
     
 def choose_race():
     char_race = input("Please enter your race: ")
+    race_list = RACE_DICT.keys()
     for race in RACE_DICT:
         if char_race in RACE_DICT[race]:
             return(race)
@@ -54,8 +56,9 @@ def roll_race():
     race = list(RACE_DICT.keys())[race_seed]
     return(race)
 
-def choose_stats(race, profession, attributes):
-    random.seed(SEED + race + profession)
+def choose_stats():
+    random.seed(SEED)
+    attributes = ATTRIBUTES
     print("\nSTATS\n")
     final_stat = "Ready"
     stats_dict = {}
@@ -76,8 +79,9 @@ def choose_stats(race, profession, attributes):
     else:
         return(stats_dict)
 
-def roll_stats(attributes):
+def roll_stats():
     stats_dict = {}
+    attributes = ATTRIBUTES
     while attributes:
         for attribute in attributes:
             seed = SEED + attribute
@@ -113,5 +117,6 @@ def pick_n_choose():
                 error_rng = random.randint(0,12)
                 print(error_list[error_rng])
                 return("try_again")
-        
-pick_n_choose()
+
+choose_class()      
+# pick_n_choose()
