@@ -3,7 +3,7 @@ import os
 
 SEED = input("Please enter your character name: ")
 ATTRIBUTES = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
-CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Zerkah","zerkah"],
+CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Barb","barb"],
     "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
     "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
     "Druid":["Druid","druid","Drood","drood","Natureboi","natureboi"],
@@ -35,9 +35,16 @@ random.seed(SEED)
 def choose_class():
     char_class = input("Please enter your class: ")
     class_list = CLASS_DICT.keys()
-    for profession in CLASS_DICT:
-        if char_class in CLASS_DICT[profession]:
-            return(profession)
+    check_countdown = 12
+    check_true = False
+    if check_countdown > 0:
+        for profession in CLASS_DICT:
+            if char_class not in CLASS_DICT[profession]:
+                check_countdown -= 1
+            else:
+                check_true = True
+                break
+    return(profession,check_true)
     
 def roll_class():
     profession_seed = random.randint(0,12)
@@ -118,5 +125,8 @@ def pick_n_choose():
                 print(error_list[error_rng])
                 return("try_again")
 
-choose_class()      
+profession,check_true = choose_class()
+if check_true == True:
+    print(profession)
+   
 # pick_n_choose()
