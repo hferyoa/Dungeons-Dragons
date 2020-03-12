@@ -3,6 +3,7 @@ import os
 
 SEED = input("Please enter your character name: ")
 ATTRIBUTES = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
+CHECK_CONTINUE = False
 CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Barb","barb"],
     "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
     "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
@@ -34,7 +35,6 @@ random.seed(SEED)
 
 def choose_class():
     char_class = input("Please enter your class: ")
-    class_list = CLASS_DICT.keys()
     check_countdown = 12
     check_true = False
     if check_countdown > 0:
@@ -126,7 +126,13 @@ def pick_n_choose():
                 return("try_again")
 
 profession,check_true = choose_class()
-if check_true == True:
-    print(profession)
+class_tuple = (profession,check_true)
+while CHECK_CONTINUE == False:
+    if check_true == True:
+        print(profession)
+        CHECK_CONTINUE = True
+    elif check_true == False:
+        print("No, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
+        profession,check_true = choose_class()
    
 # pick_n_choose()
