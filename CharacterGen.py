@@ -3,7 +3,8 @@ import os
 
 SEED = input("Please enter your character name: ")
 ATTRIBUTES = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
-CHECK_CONTINUE = False
+CLASS_CONTINUE = False
+RACE_CONTINUE = False
 CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Barb","barb"],
     "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
     "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
@@ -35,16 +36,16 @@ random.seed(SEED)
 
 def choose_class():
     char_class = input("Please enter your class: ")
-    check_countdown = 12
-    check_true = False
-    if check_countdown > 0:
+    class_countdown = 12
+    class_true = False
+    if class_countdown > 0:
         for profession in CLASS_DICT:
             if char_class not in CLASS_DICT[profession]:
-                check_countdown -= 1
+                class_countdown -= 1
             else:
-                check_true = True
+                class_true = True
                 break
-    return(profession,check_true)
+    return(profession,class_true)
     
 def roll_class():
     profession_seed = random.randint(0,12)
@@ -53,10 +54,16 @@ def roll_class():
     
 def choose_race():
     char_race = input("Please enter your race: ")
-    race_list = RACE_DICT.keys()
-    for race in RACE_DICT:
-        if char_race in RACE_DICT[race]:
-            return(race)
+    race_countdown = 13
+    race_true = False
+    if race_countdown > 0:
+        for race in RACE_DICT:
+            if char_race not in RACE_DICT[race]:
+                race_countdown -= 1
+            else:
+                race_true = True
+                break
+    return(race,race_true)
 
 def roll_race():
     race_seed = random.randint(0,13)
@@ -125,14 +132,24 @@ def pick_n_choose():
                 print(error_list[error_rng])
                 return("try_again")
 
-profession,check_true = choose_class()
-class_tuple = (profession,check_true)
-while CHECK_CONTINUE == False:
-    if check_true == True:
+profession,class_true = choose_class()
+class_tuple = (profession,class_true)
+while CLASS_CONTINUE == False:
+    if class_true == True:
         print(profession)
-        CHECK_CONTINUE = True
-    elif check_true == False:
-        print("No, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
-        profession,check_true = choose_class()
+        CLASS_CONTINUE = True
+    elif class_true == False:
+        print("\nNo, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
+        profession,class_true = choose_class()
+    
+race,race_true = choose_race()
+race_tuple = (race,race_true)
+while RACE_CONTINUE == False:
+    if race_true == True:
+        print(race)
+        RACE_CONTINUE = True
+    elif race_true == False:
+        print("\nThat's not a race you fucking donkey. Try again.\nChoose from the following:\n" + str(list(RACE_DICT)))
+        race,race_true = choose_race()
    
 # pick_n_choose()
