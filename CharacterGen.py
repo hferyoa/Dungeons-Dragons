@@ -3,8 +3,12 @@ import os
 
 SEED = input("Please enter your character name: ")
 ATTRIBUTES = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
-CLASS_CONTINUE = False
-RACE_CONTINUE = False
+ATTRIBUTE_DICT = {"Strength":["Strength","strength","STR","Str","str"],
+    "Wisdom":["Wisdom","wisdom","WIS","Wis","wis"],
+    "Charisma":["Charisma","charisma","CHA","Cha","cha"],
+    "Dexterity":["Dexterity","dexterity","DEX","Dex","dex"],
+    "Constitution":["Constitution","constitution","CON","Con","con"],
+    "Intelligence":["Intelligence","intelligence","INT","Int","int"]}
 CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Barb","barb"],
     "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
     "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
@@ -36,15 +40,11 @@ random.seed(SEED)
 
 def choose_class():
     char_class = input("Please enter your class: ")
-    class_countdown = 12
     class_true = False
-    if class_countdown > 0:
-        for profession in CLASS_DICT:
-            if char_class not in CLASS_DICT[profession]:
-                class_countdown -= 1
-            else:
-                class_true = True
-                break
+    for profession in CLASS_DICT:
+        if char_class in CLASS_DICT[profession]:
+            class_true = True
+            break
     return(profession,class_true)
     
 def roll_class():
@@ -54,15 +54,11 @@ def roll_class():
     
 def choose_race():
     char_race = input("Please enter your race: ")
-    race_countdown = 13
     race_true = False
-    if race_countdown > 0:
-        for race in RACE_DICT:
-            if char_race not in RACE_DICT[race]:
-                race_countdown -= 1
-            else:
-                race_true = True
-                break
+    for race in RACE_DICT:
+        if char_race in RACE_DICT[race]:
+            race_true = True
+            break
     return(race,race_true)
 
 def roll_race():
@@ -73,6 +69,7 @@ def roll_race():
 def choose_stats():
     random.seed(SEED)
     attributes = ATTRIBUTES
+    attribute_alias = ATTRIBUTE_DICT.values()
     print("\nSTATS\n")
     final_stat = "Ready"
     stats_dict = {}
@@ -83,11 +80,12 @@ def choose_stats():
             final_stat = sum(stat_array)
         print("You rolled: " + str(final_stat) + ".\n")
         choice = input("What would you like to put this stat in? Your choices are: " + str(attributes) + ":\n")
-        if choice in attributes:
-            print("Your " + choice + " stat is: " + str(final_stat) + ".\n")
-            attributes.remove(choice)
-            stats_dict[choice] = final_stat
-            final_stat = "Ready"
+        if choice in ATTRIBUTE_DICT[attribute_alias]:
+            print("Fuckinghellthisworked")
+            # print("Your " + choice + " stat is: " + str(final_stat) + ".\n")
+            # attributes.remove(choice)
+            # stats_dict[choice] = final_stat
+            # final_stat = "Ready"
         else:
             print("Sorry, that isn't an available choice. Please select from the following:\n" + str(attributes))
     else:
@@ -112,8 +110,8 @@ def roll_stats():
 def pick_n_choose():
     player_choice = input("Would you like to \"build\" your character, or leave it to the \"fates\"?\nFeel free to make an \"except\"ion for \"race\", \"class\", or \"stats\".\nYour choice: ")
     parsed_choice = player_choice.split()
-    choice_list = [["choose_race","roll_race"],["choose_class","roll_class"],["choose_stats","roll_stats"]]
-    function_dict = {"choose_race":choose_race,"choose_class":choose_class,"choose_stats":choose_stats,"roll_race":roll_race,"roll_class":roll_class,"roll_stats":roll_stats}
+    choice_list = [["build_race","roll_race"],["build_class","roll_class"],["choose_stats","roll_stats"]]
+    function_dict = {"build_race":build_race,"build_class":build_class,"choose_stats":choose_stats,"roll_race":roll_race,"roll_class":roll_class,"roll_stats":roll_stats}
     error_list = ["A Barbarian crushed your input. Try again.", "A Bard distracted your computer. Try again.", "This Cleric can't heal your input. Try again.", "A Druid polymorphed your input into a sheep. Try again.","A Fighter beat your choice in a duel. Try again.","Your choice has decided to leave and become a Monk. Try again.","A Paladin smited (smote?) your input. Try again.","A Ranger fed your input to her pet. Try again.","A Rogue assassinated your choice of words. Try again.","A Sorcerer incinerated your input. Try again.","A Warlock summoned and made a pact with a greater daemon just to turn your input to gibberish. Try again.","A Wizard turned the internals of the computer to jelly by mistake. Try again.","An Artificer didn't code this properly so it didn't work. Try again."]
     if "except" in parsed_choice:
         exception = parsed_choice[parsed_choice.index("except") + 1]
@@ -132,24 +130,41 @@ def pick_n_choose():
                 print(error_list[error_rng])
                 return("try_again")
 
-profession,class_true = choose_class()
-class_tuple = (profession,class_true)
-while CLASS_CONTINUE == False:
-    if class_true == True:
-        print(profession)
-        CLASS_CONTINUE = True
-    elif class_true == False:
-        print("\nNo, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
-        profession,class_true = choose_class()
+def build_class():
+    CLASS_CONTINUE = False
+    profession,class_true = choose_class()
+    while CLASS_CONTINUE == False:
+        if class_true == True:
+            print(profession)
+            CLASS_CONTINUE = True
+        elif class_true == False:
+            print("\nNo, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
+            profession,class_true = choose_class()
     
-race,race_true = choose_race()
-race_tuple = (race,race_true)
-while RACE_CONTINUE == False:
-    if race_true == True:
-        print(race)
-        RACE_CONTINUE = True
-    elif race_true == False:
-        print("\nThat's not a race you fucking donkey. Try again.\nChoose from the following:\n" + str(list(RACE_DICT)))
-        race,race_true = choose_race()
-   
+def build_race():
+    RACE_CONTINUE = False
+    race,race_true = choose_race()
+    while RACE_CONTINUE == False:
+        if race_true == True:
+            print(race)
+            RACE_CONTINUE = True
+        elif race_true == False:
+            print("\nThat's not a race you fucking donkey. Try again.\nChoose from the following:\n" + str(list(RACE_DICT)))
+            race,race_true = choose_race()
+
+def build(rorcors,to_build):
+    rorcors_dict = {"race":RACE_DICT,"class":CLASS_DICT,"stats":ATTRIBUTE_DICT}
+    tb_continue = False
+    race_class_stats,r_c_s_true = to_build()
+    while tb_continue == False:
+        if r_c_s_true == True:
+            print(r_c_s_true)
+            tb_continue = True
+        elif r_c_s_true == False:
+            if rorcors in rorcors_dict:
+                print("\nThat's not a " + rorcors + " you fucking donkey. Try again.\nChoose from the following:\n" + str(list(rorcors_dict[rorcors])))
+                race_class_stats,r_c_s_true = to_build()
+
+build("race",build_race)
+
 # pick_n_choose()
