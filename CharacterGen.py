@@ -2,13 +2,7 @@ import random
 import os
 
 SEED = input("Please enter your character name: ")
-ATTRIBUTES = ["Strength","Wisdom","Charisma","Dexterity","Constitution","Intelligence"]
-ATTRIBUTE_DICT = {"Strength":["Strength","strength","STR","Str","str"],
-    "Wisdom":["Wisdom","wisdom","WIS","Wis","wis"],
-    "Charisma":["Charisma","charisma","CHA","Cha","cha"],
-    "Dexterity":["Dexterity","dexterity","DEX","Dex","dex"],
-    "Constitution":["Constitution","constitution","CON","Con","con"],
-    "Intelligence":["Intelligence","intelligence","INT","Int","int"]}
+ATTRIBUTES = ["strength","wisdom","charisma","dexterity","constitution","intelligence"]
 CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Barb","barb"],
     "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
     "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
@@ -70,11 +64,11 @@ def roll_race():
 
 def choose_stats():
     random.seed(SEED)
-    attributes = ATTRIBUTES
-    attribute_alias = ATTRIBUTE_DICT.values()
+    attributes = [element.lower() for element in ATTRIBUTES]
     print("\nSTATS\n")
     final_stat = "Ready"
     stats_dict = {}
+    sublist_counter = 5
     while attributes:
         die_roll = random.randint(1,6)
         stat_array = [die_roll, die_roll, die_roll]
@@ -82,14 +76,17 @@ def choose_stats():
             final_stat = sum(stat_array)
         print("You rolled: " + str(final_stat) + ".\n")
         choice = input("What would you like to put this stat in? Your choices are: " + str(attributes) + ":\n")
-        if choice in ATTRIBUTE_DICT[attribute_alias]:
-            print("Fuckinghellthisworked")
-            # print("Your " + choice + " stat is: " + str(final_stat) + ".\n")
-            # attributes.remove(choice)
-            # stats_dict[choice] = final_stat
-            # final_stat = "Ready"
-        else:
-            print("Sorry, that isn't an available choice. Please select from the following:\n" + str(attributes))
+        for item in attributes:
+            if choice.lower() in item:
+                print("Your " + item.title() + " stat is: " + str(final_stat) + ".\n")
+                attributes.remove(item)
+                stats_dict[choice] = final_stat
+                final_stat = "Ready"
+                break
+            else:
+                sublist_counter -= 1
+                if sublist_counter == 0:
+                    print("Sorry, that isn't an available choice. Please select from the following:\n" + str(attributes))
     else:
         return(stats_dict)
 
@@ -118,7 +115,7 @@ def pick_n_choose():
     if "except" in parsed_choice:
         exception = parsed_choice[parsed_choice.index("except") + 1]
         build_or_fates = parsed_choice[parsed_choice.index("except") - 1]
-        picked_n_chosen(True,build_or_fates,exception)
+        # picked_n_chosen(True,build_or_fates,exception)
     else:
         no_exceptions(parsed_choice,choice_list,function_dict)
 
@@ -134,7 +131,7 @@ def no_exceptions(choice,choice_list,function_dict):
                     function_dict[item[1]]()
 
 
-def an_exception(choice,exception,choice_list,function_dict):
+# def an_exception(choice,exception,choice_list,function_dict):
                 
 
 def build_class():
@@ -161,7 +158,7 @@ def build_race():
             race,race_true = choose_race()
 
 def build(rorcors,to_build):
-    rorcors_dict = {"race":RACE_DICT,"class":CLASS_DICT,"stats":ATTRIBUTE_DICT}
+    rorcors_dict = {"race":RACE_DICT,"class":CLASS_DICT,"stats":ATTRIBUTES}
     tb_continue = False
     r_c_s_true = to_build()
     while tb_continue == False:
@@ -172,6 +169,4 @@ def build(rorcors,to_build):
                 print("\nThat's not a " + rorcors + " you fucking donkey. Try again.\nChoose from the following:\n" + str(list(rorcors_dict[rorcors])))
                 r_c_s_true = to_build()
 
-# build("race",build_race)
-
-pick_n_choose()
+choose_stats()
