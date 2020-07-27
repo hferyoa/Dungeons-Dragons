@@ -1,57 +1,86 @@
+#IMPORTS
 import random
 import os
+import time
 
+#GLOBALS
 SEED = input("Please enter your character name: ")
 ATTRIBUTES = ["strength","wisdom","charisma","dexterity","constitution","intelligence"]
-CLASS_DICT = {"Barbarian":["Barbarian","barbarian","Berserker","berserker","Berzerker","berzerker","Barb","barb"],
-    "Bard":["Bard","bard","Minstrel","minstrel","Poet","poet"],
-    "Cleric":["Cleric","cleric","Priest","priest","Healer","healer"],
-    "Druid":["Druid","druid","Drood","drood","Natureboi","natureboi"],
-    "Fighter":["Fighter","fighter","Warrior","warrior","Grunt","grunt"],
-    "Monk":["Monk","monk","Pilgrim","pilgrim","Martial Artist","martial artist","Martial artist"],
-    "Paladin":["Paladin","paladin","Crusader","crusader","Zealot","zealot","Pally","pally"],
-    "Ranger":["Ranger","ranger","Hunter","hunter","Wanderer","wanderer"],
-    "Rogue":["Rogue","rogue","Thief","thief","Assassin","assassin"],
-    "Sorcerer":["Sorcerer","sorcerer","Sorc","sorc","Haemagos","haemagos"],
-    "Warlock":["Warlock","warlock","Lock","lock","Occultist","occultist"],
-    "Wizard":["Wizard","wizard","Scientist","scientist","Academic","academic","Wiz","wiz"],
-    "Artificer":["Artificer","artificer","Tinkerer","tinkerer","Inventor","inventor"]}
-RACE_DICT = {"Dwarva":["Dwarva","dwarva","Dwarf","dwarf","Gnome","gnome"],
-    "Human":["Human","human","Man","man","Person","person"],
-    "Kirku":["Kirku","kirku","Zen","zen","Buddhist","buddhist"],
-    "Mabonde":["Mabonde","mabonde","Plains","plains","Orc","orc"],
-    "Muti":["Muti","muti","Treeorc","treeorc","Barkskin","barkskin"],
-    "Oread":["Oread","oread","Roman","roman","Cold","cold"],
-    "Ronahi":["Ronahi","ronahi","Missing","missing","Nomad","nomad"],
-    "Semayawi":["Semayawi","semayawi","Celestial","celestial","Radiant","radiant"],
-    "Tewagi":["Tewagi","tewagi","Hunter","hunter","Roaming","roaming"],
-    "Vekiri":["Vekiri","vekiri","Devilkin","devilkin","Pact","pact"],
-    "Volyri":["Volyri","volyri","Frog","frog","Pixie","pixie"],
-    "Wulfe":["Wulfe","wulfe","Werewolf","werewolf","Wolfkin","wolfkin"],
-    "Yuan":["Yuan","yuan","Apeling","apeling","Monkey","monkey"],
-    "Forged":["Forged","forged","Machine","machine","Cyborg","cyborg"]}
-random.seed(SEED)
+CLASS_DICT = {"barbarian":["barbarian","berserker","berzerker"],
+    "bard":["bard","minstrel","poet"],
+    "cleric":["cleric","priest","healer"],
+    "druid":["druid"],
+    "fighter":["fighter","warrior"],
+    "monk":["monk","pilgrim","martial artist"],
+    "paladin":["paladin","crusader","zealot","pally"],
+    "ranger":["ranger","hunter","wanderer"],
+    "rogue":["rogue","thief","assassin"],
+    "sorcerer":["sorcerer"],
+    "warlock":["warlock","occultist"],
+    "wizard":["wizard","Academic","academic"],
+    "artificer":["artificer","tinkerer","inventor"]}
+RACE_DICT = {"dwarva":["dwarva","dwarf","gnome"],
+    "human":["human","man","person"],
+    "kirku":["kirku"],
+    "mabonde":["mabonde","plains","orc"],
+    "muti":["muti","treeorc","barkskin"],
+    "oread":["oread","roman"],
+    "ronahi":["ronahi","missing","nomad"],
+    "semayawi":["semayawi","celestial","angel"],
+    "tewagi":["tewagi","hunter","roaming"],
+    "vekiri":["vekiri","devil","demon"],
+    "volyri":["volyri","frog","pixie"],
+    "wulfe":["wulfe","werewolf","wolfkin"],
+    "yuan":["yuan","apeling","monkey"],
+    "forged":["forged","machine","cyborg"]}
+CHOICE_LIST = [["build_race","roll_race"],["build_class","roll_class"],["choose_stats","roll_stats"]]
+TOTAL_SEED = SEED + str(time.monotonic_ns())
+random.seed(TOTAL_SEED)
+
+#FUNCTIONS
+def build_class():
+    CLASS_CONTINUE = False
+    profession,class_true = choose_class()
+    while CLASS_CONTINUE == False:
+        if class_true == True:
+            print(profession)
+            CLASS_CONTINUE = True
+        elif class_true == False:
+            print("\nNo, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
+            profession,class_true = choose_class()
 
 def choose_class():
     char_class = input("Please enter your class: ")
     class_true = False
     for profession in CLASS_DICT:
-        if char_class in CLASS_DICT[profession]:
+        if char_class.lower() in CLASS_DICT[profession]:
             class_true = True
             break
     return(profession,class_true)
-    
+
 def roll_class():
     profession_seed = random.randint(0,12)
     profession = list(CLASS_DICT.keys())[profession_seed]
     print(profession)
     return(profession)
-    
+
+def build_race():
+    RACE_CONTINUE = False
+    race,race_true = choose_race()
+    while RACE_CONTINUE == False:
+        if race_true == True:
+            print(race)
+            RACE_CONTINUE = True
+            return(RACE_CONTINUE)
+        elif race_true == False:
+            print("\nThat's not a race you fucking donkey. Try again.\nChoose from the following:\n" + str(list(RACE_DICT)))
+            race,race_true = choose_race()
+
 def choose_race():
     char_race = input("Please enter your race: ")
     race_true = False
     for race in RACE_DICT:
-        if char_race in RACE_DICT[race]:
+        if char_race.lower() in RACE_DICT[race]:
             race_true = True
             break
     return(race,race_true)
@@ -62,7 +91,7 @@ def roll_race():
     print(race)
     return(race)
 
-def choose_stats():
+def build_stats():
     random.seed(SEED)
     attributes = [element.lower() for element in ATTRIBUTES]
     print("\nSTATS\n")
@@ -80,7 +109,7 @@ def choose_stats():
             if choice.lower() in item:
                 print("Your " + item.title() + " stat is: " + str(final_stat) + ".\n")
                 attributes.remove(item)
-                stats_dict[choice] = final_stat
+                stats_dict[item] = final_stat
                 final_stat = "Ready"
                 break
             else:
@@ -107,66 +136,35 @@ def roll_stats():
         print(stats_dict)
         return(stats_dict)
 
+def no_exceptions(choice):
+    if 'build' in choice:
+        for item in CHOICE_LIST:
+            if item[0] in globals():
+                globals()[item[0]]()
+    elif 'fates' in choice:
+            for item in CHOICE_LIST:
+                if item[1] in globals():
+                    globals()[item[1]]()
+    else:
+        print("Either you've typo'd it or you tried breaking the code.")
+        pick_n_choose()
+
 def pick_n_choose():
-    choice_list = [["build race","roll race"],["build class","roll class"],["choose stats","roll stats"]]
-    function_dict = {"build race":build_race,"build class":build_class,"choose stats":choose_stats,"roll race":roll_race,"roll class":roll_class,"roll stats":roll_stats}
     player_choice = input("Would you like to \"build\" your character, or leave it to the \"fates\"?\nFeel free to make an \"except\"ion for \"race\", \"class\", or \"stats\".\nYour choice: ")
-    parsed_choice = player_choice.split()
+    choice_dict = {"build":"build_","fates":"roll_"}
+    basic_choice_list = ["race","class","stats"]
+    exception_dict = {"build":"roll_","fates":"build_"}
+    parsed_choice = player_choice.lower().split()
     if "except" in parsed_choice:
         exception = parsed_choice[parsed_choice.index("except") + 1]
         build_or_fates = parsed_choice[parsed_choice.index("except") - 1]
-        # picked_n_chosen(True,build_or_fates,exception)
+        for choice in basic_choice_list:
+            if exception == choice:
+                globals()[exception_dict[build_or_fates] + exception]()
+            else:
+                globals()[choice_dict[build_or_fates] + choice]()
     else:
-        no_exceptions(parsed_choice,choice_list,function_dict)
+        no_exceptions(parsed_choice)
 
-def no_exceptions(choice,choice_list,function_dict):
-    if "build" in choice:
-        for item in choice_list:
-            if item[0] in function_dict:
-                function_dict[item[0]]()
-    else:
-        if "fates" in choice:
-            for item in choice_list:
-                if item[1] in function_dict:
-                    function_dict[item[1]]()
-
-
-# def an_exception(choice,exception,choice_list,function_dict):
-                
-
-def build_class():
-    CLASS_CONTINUE = False
-    profession,class_true = choose_class()
-    while CLASS_CONTINUE == False:
-        if class_true == True:
-            print(profession)
-            CLASS_CONTINUE = True
-        elif class_true == False:
-            print("\nNo, wait. That isn't right. Try again.\nChoose from the following:\n" + str(list(CLASS_DICT)))
-            profession,class_true = choose_class()
-    
-def build_race():
-    RACE_CONTINUE = False
-    race,race_true = choose_race()
-    while RACE_CONTINUE == False:
-        if race_true == True:
-            print(race)
-            RACE_CONTINUE = True
-            return(RACE_CONTINUE)
-        elif race_true == False:
-            print("\nThat's not a race you fucking donkey. Try again.\nChoose from the following:\n" + str(list(RACE_DICT)))
-            race,race_true = choose_race()
-
-def build(rorcors,to_build):
-    rorcors_dict = {"race":RACE_DICT,"class":CLASS_DICT,"stats":ATTRIBUTES}
-    tb_continue = False
-    r_c_s_true = to_build()
-    while tb_continue == False:
-        if r_c_s_true == True:
-            tb_continue = True
-        elif r_c_s_true == False:
-            if rorcors in rorcors_dict:
-                print("\nThat's not a " + rorcors + " you fucking donkey. Try again.\nChoose from the following:\n" + str(list(rorcors_dict[rorcors])))
-                r_c_s_true = to_build()
-
-choose_stats()
+#LETSGO
+pick_n_choose()
