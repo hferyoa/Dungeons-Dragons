@@ -1,6 +1,5 @@
 #IMPORTS
 import random
-import os
 import time
 
 #GLOBALS
@@ -33,7 +32,7 @@ RACE_DICT = {"dwarva":["dwarva","dwarf","gnome"],
     "wulfe":["wulfe","werewolf","wolfkin"],
     "yuan":["yuan","apeling","monkey"],
     "forged":["forged","machine","cyborg"]}
-CHOICE_LIST = [["build_race","roll_race"],["build_class","roll_class"],["choose_stats","roll_stats"]]
+CHOICE_LIST = [["build_race","roll_race"],["build_class","roll_class"],["build_stats","roll_stats"]]
 TOTAL_SEED = SEED + str(time.monotonic_ns())
 random.seed(TOTAL_SEED)
 
