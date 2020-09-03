@@ -27,11 +27,11 @@ class Character:
 class CreateCharacter:
     basic_details = "CreateCharacter(owner,name)"
     profession_list = ["artificer","barbarian","bard","cleric","druid","fighter","monk","paladin","ranger","rogue","sorcerer","warlock","wizard"]
-    race_list = ["dwarva","forged","human","kirku","mabonde","muti","oread","ronahi","semayawi","tewagi","vekiri","volyri","wulfe","yuan"]
+    race_list = ["dwarva","forged","human","kirku","ghena","ravodit","oread","ronahi","semayawi","vadasj","vekiri","volyri","wulfe","yuan"]
     stats_list = ["strength","wisdom","charisma","dexterity","constitution","intelligence"]
     character_dict = {}
-    rd = open("race_dict.json")
-    race_dict = json.load(rd)
+    race_dict = json.load(open("race_dict.json"))
+    profession_dict = json.load(open("profession_dict.json"))
     
     def __init__(self,owner,name,seed=None):
         self.owner = owner
@@ -137,87 +137,31 @@ class CreateCharacter:
         print(self.race_dict["dwarva"])
 
     def writeback(self,character_key,character_value):
-        self.character_dict[character_key] = character_value
+        self.character_dict[f"{character_key}"] = character_value
 
     def confirm_race(self,race,first_try=True):
         if first_try == True:
-            print(self.race_dict[race]) ################################### FIX THIS SHIT, FUCKER
+            print(self.race_dict[race])
         confirm_race = input("Is this the race you choose? yes/no\n")
         if confirm_race in "yes":
-            self.character_dict["race"]:race
+            self.writeback("race",race)
         elif confirm_race in "no":
             self.build_race(self.race_list,False)
         else:
             print("Please type either \"yes\" or \"no\".\n")
             self.confirm_race(race,False)
 
+    def confirm_profession(self,profession,first_try=True):
+        if first_try == True:
+            print(self.profession_dict[profession])
+        confirm_profession = input("Is this the class you choose? yes/no\n")
+        if confirm_profession in "yes":
+            self.writeback("class",profession)
+        elif confirm_profession in "no":
+            self.build_race(self.profession_list,False)
+        else:
+            print("Please type either \"yes\" or \"no\".\n")
+            self.confirm_profession(profession,False)
 
-    # def choose_dwarva(self,first_try=True):
-    #     if first_try == True:
-    #         print("The Dwarva of the undermountain caverns of Lia Fál are a proud and stoic race. They reside in catacombic tunnels hollowed out over centuries from natural karsts and pyroducts, and their time in this harsh subterranean climate has hardened them both physically and mentally.\n")
-    #     confirm_race = input("Is this the race you choose? yes/no\n")
-    #     if confirm_race in "yes":
-    #         self.character_dict["race"]:"Dwarva"
-    #     elif confirm_race in "no":
-    #         self.build_race(self.race_list,False)
-    #     else:
-    #         print("Please type either \"yes\" or \"no\".\n")
-    #         self.choose_dwarva(False)
-
-
-    # def choose_forged(self,first_try=True):
-    #     if first_try == True:
-    #         print("Arriving in Rodinia after fleeing their far off homeland to the West that they are unwilling, or unable, to discuss, the Forged are more machine than man. They often put their bodies completely on the line in battle, as their mechanical bodies enable them to replace any broken parts.\n")
-    #     confirm_race = input("Is this the race you choose? yes/no\n")
-    #     if confirm_race in "yes":
-    #         self.character_dict["race"]:"Forged"
-    #     elif confirm_race in "no":
-    #         self.build_race(self.race_list,False)
-    #     else:
-    #         print("Please type either \"yes\" or \"no\".\n")
-    #         self.choose_forged(False)
-
-    # def choose_human(self,first_try=True):
-    #     if first_try == True:
-    #         print("Humans are known for living abnormally long lives for adventurers, thanks almost entirely to the race's unrelenting tenacity. Humans have had to fight tooth and nail for every inch of land they own, and continue to fight on all fronts to prevent this same land from being reconquered.\n")
-    #     confirm_race = input("Is this the race you choose? yes/no\n")
-    #     if confirm_race in "yes":
-    #         self.character_dict["race"]:"Human"
-    #     elif confirm_race in "no":
-    #         self.build_race(self.race_list,False)
-    #     else:
-    #         print("Please type either \"yes\" or \"no\".\n")
-    #         self.choose_human(False)
-
-    # def choose_kirku(self):
-    #     pass
-    
-    # def choose_mabonde(self):
-    #     pass
-    
-    # def choose_muti(self):
-    #     pass
-    
-    # def choose_oread(self):
-    #     pass
-
-    # def choose_ronahi(self):
-    #     pass
-
-    # def choose_semayawi(self):
-    #     pass
-
-    # def choose_tewagi(self):
-    #     pass
-
-    # def choose_vekiri(self):
-    #     pass
-
-    # def choose_volyri(self):
-    #     pass
-
-    # def choose_wulfe(self):
-    #     pass
-
-    # def choose_yuan(self):
-    #     pass
+    def character_attributes(self):
+        print(self.character_dict)
