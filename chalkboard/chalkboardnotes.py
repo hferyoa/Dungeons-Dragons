@@ -64,22 +64,22 @@
 # print(dict1)
 
 ###
-def try1(arguments=None):
-    try2(arguments)
+# def try1(arguments=None):
+#     try2(arguments)
 
-def try2(arguments=None):
-    if arguments >= 0:
-        print("Success!")
+# def try2(arguments=None):
+#     if arguments >= 0:
+#         print("Success!")
 
-try1(2)
+# try1(2)
 
 
-confirm_choice = input("Your profession is " + profession + ". Is this correct? y/n\n")
-            if util.strtobool(confirm_choice) == True:
-                self.function_call("character","dict",{"Profession":profession})
-            else:
-                print("Let's try this again.")
-                self.build_profession()
-        else:
-            print("That's not an available profession. Please select from the following: ")
-            print("\n".join(self.profession_list))
+# confirm_choice = input("Your profession is " + profession + ". Is this correct? y/n\n")
+#             if util.strtobool(confirm_choice) == True:
+#                 self.function_call("character","dict",{"Profession":profession})
+#             else:
+#                 print("Let's try this again.")
+#                 self.build_profession()
+#         else:
+#             print("That's not an available profession. Please select from the following: ")
+#             print("\n".join(self.profession_list))

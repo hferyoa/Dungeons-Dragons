@@ -4,6 +4,7 @@ __author__ = 'Lorkh4n' # I need to change this name, am open to suggestions
 import random
 import time
 import json
+import re
 from distutils import util
 from more_itertools import locate
 
@@ -25,10 +26,12 @@ class Character:
         pass
     
 class CreateCharacter:
-    basic_details = "CreateCharacter(owner,name)"
     profession_list = ["artificer","barbarian","bard","cleric","druid","fighter","monk","paladin","ranger","rogue","sorcerer","warlock","wizard"]
     race_list = ["dwarva","forged","human","kirku","ghena","ravodit","oread","ronahi","semayawi","vadasj","vekiri","volyri","wulfe","yuan"]
     stats_list = ["strength","wisdom","charisma","dexterity","constitution","intelligence"]
+    choice_dict = {"build":"build_","random":"random_"}
+    basic_choice_list = ["race","class","stats","background","equipment","level"]
+    exception_dict = {"build":"random_","random":"build_"}
     character_dict = {}
     race_dict = json.load(open("race_dict.json"))
     profession_dict = json.load(open("profession_dict.json"))
@@ -38,9 +41,15 @@ class CreateCharacter:
         self.name = name
         self.seed = str(owner + "_" + str(time.monotonic_ns())[3:9] + "_" + name)
 
-    def function_call(self,function,arguments=None):
+    def function_call(self,function,arguments=False):
         function_call = getattr(self,function)
-        function_call(arguments)
+        if arguments:
+            function_call(arguments)
+        elif arguments == False:
+            function_call()
+        else:
+            print("This has errored in an unforseen way. Oops.")
+            exit()   
 
     def build_background(self):
         pass
@@ -51,7 +60,7 @@ class CreateCharacter:
     def build_level(self):
         pass
 
-    def build_profession(self,listed_professions = profession_list,profession_choice = False):
+    def build_class(self,listed_professions = profession_list,profession_choice = False):
         if profession_choice == False:
             profession_choice = input("Please enter your class: ")
         profession_index = []
@@ -61,13 +70,13 @@ class CreateCharacter:
         else:
             if len(profession_index) > 1:
                 final_profession = input("There are " + str(len(profession_index)) + " options for \"" + profession_choice + "\". Which would you like:\n" + "\n".join(profession_index) + "\n\n")
-                self.build_profession(profession_index,final_profession)
+                self.build_class(profession_index,final_profession)
             elif len(profession_index) == 1:
                 print(profession_index)
                 self.function_call("confirm_profession",profession_index[0])
             else: 
                 print("You haven't selected a valid class. Please enter one of the following:\n" + "\n".join(self.profession_list))
-                self.build_profession()
+                self.build_class()
 
     def build_race(self,listed_races = race_list,race_choice = False):
         if race_choice == False:
@@ -124,11 +133,16 @@ class CreateCharacter:
     def random_level(self):
         pass
 
-    def random_profession(self):
-        pass
+    def random_class(self):
+        profession_seed = random.randint(0,12)
+        profession = list(self.profession_dict.keys())[profession_seed]
+        self.writeback("Class",profession)
+        print(self.character_dict)
 
     def random_race(self):
-        pass
+        race_seed = random.randint(0,13)
+        race = list(self.race_dict.keys())[race_seed]
+        self.writeback("Race",race)
 
     def random_stats(self):
         pass
@@ -162,6 +176,28 @@ class CreateCharacter:
         else:
             print("Please type either \"yes\" or \"no\".\n")
             self.confirm_profession(profession,False)
+    
+    def initial_function(self):
+        self.writeback("name",self.name)
+        self.writeback("player",self.owner)
+        player_choice = input("Would you like to \"build\" your character, or leave it to \"random\"isation?\nFeel free to make an \"except\"ion for \"race\", \"class\", \"stats\", \"background\", \"equipment\", or \"level\".\nYour choice: ")
+        parsed_choice = player_choice.lower().split()
+        if "build" or "random" in parsed_choice[0]:
+            while parsed_choice[1] in "except":
+                regex_search = re.compile(f"{parsed_choice[1]}(.*)$").search(player_choice).group(1).split()
+                for char_attribute in regex_search:
+                    exception_bor = self.exception_dict[parsed_choice[0]]
+                    function_name = f"{exception_bor}{char_attribute}"
+                    self.function_call(function_name)
+                    self.basic_choice_list.remove(char_attribute)
+                else:
+                    parsed_choice.remove(parsed_choice[1])
+            while self.basic_choice_list:
+                for char_attribute in self.basic_choice_list:
+                    choice_bor = self.choice_dict[parsed_choice[0]]
+                    function_name = f"{choice_bor}{char_attribute}"
+                    self.function_call(function_name)
+                    self.basic_choice_list.remove(char_attribute)
 
     def character_attributes(self):
         print(self.character_dict)
