@@ -10,4 +10,5 @@ CC_API = CreateCharacter(PLAYER_NAME,CHARACTER_NAME)
 
 
 
-CC_API.random_class()
+CC_API.initial_function()
+CC_API.final_confirmation()
