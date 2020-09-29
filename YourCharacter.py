@@ -9,6 +9,5 @@ CC_API = CreateCharacter(PLAYER_NAME,CHARACTER_NAME)
 
 
 
-
 CC_API.initial_function()
-CC_API.final_confirmation()
+CC_API.character_attributes()

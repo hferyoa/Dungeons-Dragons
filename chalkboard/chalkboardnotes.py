@@ -84,3 +84,40 @@
 #             print("That's not an available profession. Please select from the following: ")
 #             print("\n".join(self.profession_list))
 
+
+
+# if parsed_choice[0] in ("build", "random"):
+#             if len(parsed_choice) >= 3:
+#                 while parsed_choice[1] in "except":
+#                     regex_search = re.compile(f"{parsed_choice[1]}(.*)$").search(player_choice).group(1).split()
+#                     while regex_search:
+#                         for char_attribute in regex_search:
+#                             exception_bor = self.exception_dict[parsed_choice[0]]
+#                             function_name = f"{exception_bor}{char_attribute}"
+#                             if hasattr(self,function_name):
+#                                 call = getattr(self,function_name)
+#                                 call()
+#                                 regex_search.remove(char_attribute)
+#                                 choice_list.remove(char_attribute)
+#                             else:
+#                                 clear()
+#                                 print("That's not a valid exception. Let's try again.")
+#                                 self.initial_function()
+#                 else:
+#                     parsed_choice.remove(parsed_choice[1])
+#             else:
+#                 parsed_choice = parsed_choice[0]
+#                 while choice_list:
+#                     choice_bor = self.choice_dict[parsed_choice]
+#                     for char_attribute in choice_list:
+#                         function_name = f"{choice_bor}{char_attribute}"
+#                         call = getattr(self,function_name)
+#                         call()
+#                         choice_list.remove(char_attribute)
+#         else:
+#             clear()
+#             print("That isn't one of the choices I gave you. Try again.")
+#             self.initial_function()
+
+list1 = ["a","b","c"]
+print(list1[0])
