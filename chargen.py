@@ -53,11 +53,10 @@ class CreateCharacter:
     player_choice_held = []
     punct_table = str.maketrans(dict.fromkeys(string.punctuation))
     
-    
     def __init__(self,owner,name,seed=None):
         self.owner = owner
         self.name = name
-        self.seed = str(owner + "_" + str(time.monotonic_ns())[2:9] + "_" + name)
+        self.seed = str(owner + "_" + str(time.perf_counter_ns())[0:6] + "_" + name)
 
     def build_background(self):
         background_choice = input("What background would you like?\n").lower()
