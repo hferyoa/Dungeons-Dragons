@@ -1,15 +1,12 @@
 __version__ = '0.2'
-__author__ = 'Kyr0s' # I need to change this name, am open to suggestions
+__author__ = 'Chyr0s' 
 
 import pyperclip
 import random
 import time
 import json
-import re
 import os
 import string
-from distutils import util
-from more_itertools import locate
 from backgrounds import character_backgrounds
 
 def clear():
