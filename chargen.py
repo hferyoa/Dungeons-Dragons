@@ -1,5 +1,5 @@
 __version__ = '0.2'
-__author__ = 'Lorkh4n' # I need to change this name, am open to suggestions
+__author__ = 'Kyr0s' # I need to change this name, am open to suggestions
 
 import pyperclip
 import random
@@ -10,6 +10,7 @@ import os
 import string
 from distutils import util
 from more_itertools import locate
+from backgrounds import character_backgrounds
 
 def clear():
     if os.name == "nt":
@@ -21,8 +22,8 @@ def clear():
 
 
 class Character:
-    def __init__(self,level,owner,name,race,profession,stats,background,equipment):
-        self.level = 1
+    def __init__(self,owner,level,name,race,profession,stats,background,equipment):
+        self.level = level
         self.owner = owner
         self.name = name
         self.race = race
@@ -41,7 +42,7 @@ class Character:
 class CreateCharacter:
     race_dict = json.load(open("race_dict.json"))
     profession_dict = json.load(open("profession_dict.json"))
-    overall_choice = {'bor':[],'eyn':[],'chc':[]}
+    overall_choice = {'bor':[],'eyn':[]}
     profession_list = list(profession_dict)
     race_list = list(race_dict)
     stats_list = ["strength","wisdom","charisma","dexterity","constitution","intelligence"]
@@ -56,9 +57,10 @@ class CreateCharacter:
     def __init__(self,owner,name,seed=None):
         self.owner = owner
         self.name = name
-        self.seed = str(owner + "_" + str(time.monotonic_ns())[3:9] + "_" + name)
+        self.seed = str(owner + "_" + str(time.monotonic_ns())[2:9] + "_" + name)
 
     def build_background(self):
+        background_choice = input("What background would you like?\n").lower()
         pass
 
     def build_equipment(self):
@@ -209,6 +211,7 @@ class CreateCharacter:
         eyn = input('Would you like to make an exception for any aspect of your character?\nie if you chose to build your character, but want to randomise your stats for instance, type "yes"; if not, type "no".\n')
         if eyn in 'yes':
             self.overall_choice['eyn'] = 'yes'
+            print(self.overall_choice['eyn'])
         elif eyn in 'no':
             self.overall_choice['eyn'] = 'no'
         else:
@@ -217,19 +220,16 @@ class CreateCharacter:
         self.initial_function_except(bor)
         
     def initial_function_except(self,bor):
-        print(bor)
         if self.overall_choice['eyn'] == 'yes':
             exception_str = input('Please enter the aspect(s) you would like to make exceptions for, out of "background", "class", "race", and "stats".\n')
             remove_punct = exception_str.translate(self.punct_table)
             chc = remove_punct.split()
-            num = 0
-            while chc:
-                ex = chc[num]
-                func_str = f"{self.exception_dict[bor]}{ex}"
-                if hasattr(self,func_str):
+            for ex in chc:
+                if ex in self.basic_choice_list:
+                    func_str = f"{self.exception_dict[bor]}{ex}"
                     call = getattr(self,func_str)
                     call()
-                    chc.remove(ex)
+                    self.basic_choice_list.remove(ex)                    
                 else:
                     retry = input("Your choice of " + ex + " has caused an error. Would you like to select your exceptions again? y/n\n")
                     if retry in "yes":
@@ -244,13 +244,11 @@ class CreateCharacter:
 
     def initial_function_noexcept(self,bor):
         self.overall_choice['eyn'] = None
-        self.overall_choice['chc'] = self.basic_choice_list
-        chc = self.overall_choice['chc']
+        chc = self.basic_choice_list
         for choice in chc:
             func_str = f"{self.choice_dict[bor]}{choice}"
             call = getattr(self,func_str)
             call()
-            chc.remove(choice)
 
     def character_attributes(self):
         print(self.character_dict)
