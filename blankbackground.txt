@@ -1,0 +1,48 @@
+"_background":{
+    "proficiencies":{
+        "skill":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        },
+        "tool":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        },
+        "language":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        }
+    },
+    "traits":{
+        "personality":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        },
+        "ideal":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        },
+        "bond":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        },
+        "flaw":{
+            "numberof":1,
+            "possibles":[
+
+            ]
+        }
+    }
+}

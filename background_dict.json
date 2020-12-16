@@ -1,0 +1,120 @@
+{
+    "acolyte":{
+        "proficiencies":{
+            "skill":{
+                "numberof":2,
+                "possibles":[
+                    "insight","religion"
+                ]
+            },
+            "tool":{
+                "numberof":0,
+                "possibles":[
+                ]
+            },
+            "language":{
+                "numberof":2,
+                "possibles":{
+                    "1":"dwarvan",
+                    "2":"legionic",
+                    "3":"ghenac",
+                    "4":"noble",
+                    "5":"kirkui",
+                    "6":"oreadali",
+                    "7":"ravodlik",
+                    "8":"semayawa",
+                    "9":"serind",
+                    "10":"vadasju",
+                    "11":"vekir",
+                    "12":"volyrir",
+                    "13":"wulven",
+                    "14":"yuanyu"
+                }
+            }
+        },
+        "traits":{
+            "personality":{
+                "numberof":1,
+                "possibles":{
+                    "1":{
+                        "numberof":1,
+                        "possibles":[
+                            "I quote sacred texts and proverbs in almost every situation",
+                            "I misquote sacred texts and proverbs in almost every situation"
+                        ]
+                    },
+                    "2":{
+                        "numberof":1,
+                        "possibles":[
+                            "I am tolerant of other faiths and respect the worship of other Gods.",
+                            "I am intolerant of other faiths and condemn the worship of other Gods."
+                        ]
+                    },
+                    "3":"I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.",
+                    "4":"I can find common ground between the fiercest enemies, empathizing with them and always working towards peace.",
+                    "5":"I see omens in every event and action. The God(s) try to speak to us, we just needs to listen.",
+                    "6":"Nothing can shake my optimistic attitude.",
+                    "7":"I've enjoyed find food, drink, and high society among my temple's elite. Rough living grates on me.",
+                    "8":"I've spent so long in the temple that I have little practical experience dealing with people in the outside world."
+                }
+            },
+            "ideal":{
+                "numberof":2,
+                "morality":{
+                    "1":"good",
+                    "2":"evil"
+                },
+                "lavech":{
+                    "1":"lawful",
+                    "2":"chaotic"
+                },
+                "possibles":[{
+                    "category":"evil",
+                    "description":"The ancient traditions of sacrificial worship must be upheld."
+                    },{
+                    "category":"good",
+                    "description":"I always try to help those in need, no matter the personal cost."
+                    },{
+                    "category":"neutral",
+                    "description":"I seek tp prove myself worthy of my God's favour by matching my actions against His/Her teachings."
+                    },{
+                    "category":"chaotic",
+                    "description":"We must help bring about the changes the God(s) are constantly working in the world."
+                    },{
+                    "category":"lawful",
+                    "description":"I hope to one day rise to the top of my faith's religious heirarchy and/or receive that level of recognition from my God(s)."
+                    },{
+                    "category":"lawful",
+                    "description":"I trust that my God(s) will guide my actions. I have faith that if I work hard, things will go well."
+                    }
+                ]
+            },
+            "bond":{
+                "numberof":1,
+                "possibles":{
+                    "1":"I would die to recover an ancient relic of my faith that was lost long ago.",
+                    "2":"I will someday get revenge on the corrupt temple heirarchy who branded me a heretic.",
+                    "3":"I owe my life to the priest who took me in when my parents died.",
+                    "4":"Everything I do is for the common people.",
+                    "5":"I will do anything to protect the temple where I served.",
+                    "6":"I seek to preserve a sacred text that my enemies consider heretical and seek to destroy."
+                }
+            },
+            "flaw":{
+                "numberof":1,
+                "possibles":{
+                    "1":"I judge others harshly, and myself even more severely.",
+                    "2":"I put too much trust in those who wield power within my temple's heirarchy.",
+                    "3":"My piety sometimes leads me to blindly trust those that profess faith in my God(s).",
+                    "4":"I am inflexible in my thinking.",
+                    "5":"I am suspicious of strangers and expect the worst of them.",
+                    "6":"Once I pick a goal, I become obsessed with it to the detriment of everything else in my life."
+                }
+            }
+        }
+    }
+}
+
+
+
+

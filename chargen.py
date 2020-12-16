@@ -7,7 +7,7 @@ import time
 import json
 import os
 import string
-from backgrounds import character_backgrounds
+
 
 def clear():
     if os.name == "nt":
@@ -19,14 +19,13 @@ def clear():
 
 
 class Character:
-    def __init__(self,owner,level,name,race,profession,stats,background,equipment):
+    def __init__(self,owner,level,name,race,profession,stats,equipment):
         self.level = level
         self.owner = owner
         self.name = name
         self.race = race
         self.profession = profession
         self.stats = stats
-        self.background = background
         self.equipment = equipment
     
     def __str__(self):
@@ -44,7 +43,7 @@ class CreateCharacter:
     race_list = list(race_dict)
     stats_list = ["strength","wisdom","charisma","dexterity","constitution","intelligence"]
     choice_dict = {"build":"build_","random":"random_"}
-    basic_choice_list = ["race","class","stats","background","equipment"]
+    basic_choice_list = ["race","class","stats","equipment"]
     exception_dict = {"build":"random_","random":"build_"}
     character_dict = {}
     player_choice_held = []
@@ -54,10 +53,6 @@ class CreateCharacter:
         self.owner = owner
         self.name = name
         self.seed = str(owner + "_" + str(time.perf_counter_ns())[0:6] + "_" + name)
-
-    def build_background(self):
-        background_choice = input("What background would you like?\n").lower()
-        pass
 
     def build_equipment(self):
         pass
@@ -127,9 +122,6 @@ class CreateCharacter:
                         print("Sorry, that isn't an available choice. Please select from the following:\n" + str(attributes))
         else:
             self.writeback("Stats",stats_dict)
-
-    def random_background(self):
-        pass
 
     def random_equipment(self):
         pass
@@ -217,7 +209,7 @@ class CreateCharacter:
         
     def initial_function_except(self,bor):
         if self.overall_choice['eyn'] == 'yes':
-            exception_str = input('Please enter the aspect(s) you would like to make exceptions for, out of "background", "class", "race", and "stats".\n')
+            exception_str = input('Please enter the aspect(s) you would like to make exceptions for, out of "class", "race", and "stats".\n')
             remove_punct = exception_str.translate(self.punct_table)
             chc = remove_punct.split()
             for ex in chc:

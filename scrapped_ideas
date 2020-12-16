@@ -1,0 +1,19 @@
+    def build_background(self):
+        input_choice = input("What background would you like?\n").lower()
+        background_chosen = self.background_dict[input_choice]
+        firstlevel_keys = background_chosen.keys()
+        for firstlevel_key in firstlevel_keys:
+            print(firstlevel_key)
+            secondlevel_keys = background_chosen[firstlevel_key].keys()
+            for secondlevel_key in secondlevel_keys:
+                print(f"\t{secondlevel_key}")
+                checkpoint_key = background_chosen[firstlevel_key][secondlevel_key]
+                numberof = checkpoint_key["numberof"]
+                possibles = checkpoint_key["possibles"]
+                if isinstance(checkpoint_key, dict):
+                    print(checkpoint_key.keys())
+                    if "numberof" in checkpoint_key.keys():
+                        if numberof < len (possibles):
+                            character_value = input(f"Please select (by typing) {numberof} of the following, separated by spaces:\n{possibles}\n").split()
+                            writeback_string = (f"Background:{firstlevel_key}:{secondlevel_key}")
+                            self.writeback(writeback_string,character_value)
